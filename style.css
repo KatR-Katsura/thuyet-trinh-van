@@ -1,0 +1,240 @@
+/* THE LIGHT IN FAILURE — style.css
+   Sân khấu cố định 1920x1080, được JS co giãn vừa màn hình. */
+
+@property --bx { syntax: '<length>'; inherits: true; initial-value: 960px; }
+@property --bw { syntax: '<length>'; inherits: true; initial-value: 600px; }
+@property --bo { syntax: '<number>'; inherits: true; initial-value: 0; }
+@property --po { syntax: '<number>'; inherits: true; initial-value: 0; }
+@property --lc { syntax: '<color>';  inherits: true; initial-value: #8aa0bd; }
+
+:root {
+  --black: #050608;
+  --white: #F1F1F1;
+  --coal:  #202329;
+  --gold:  #D9B978;
+  --cold:  #8aa0bd;
+  --muted: rgba(241, 241, 241, .62);
+  --font: 'Be Vietnam Pro', 'Inter', 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; background: #000; overflow: hidden; }
+body { font-family: var(--font); color: var(--white); -webkit-font-smoothing: antialiased; }
+
+#viewport { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: #000; }
+
+#stage {
+  position: relative; flex: none; width: 1920px; height: 1080px;
+  background: var(--black); overflow: hidden; transform-origin: center center;
+  --bx: 960px; --bw: 600px; --bo: 0; --po: 0; --lc: #8aa0bd;
+  transition: --bx 1.8s cubic-bezier(.5, 0, .2, 1), --bw 1.8s cubic-bezier(.5, 0, .2, 1),
+              --bo 1.8s ease, --po 1.8s ease, --lc 2.6s linear;
+}
+
+/* ---------- Lớp nền & ánh sáng ---------- */
+#bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 0%, color-mix(in srgb, var(--lc) 10%, transparent), transparent 70%),
+    linear-gradient(180deg, #07080b 0%, #050608 60%, #030304 100%);
+}
+
+#beam { position: absolute; top: -20px; height: 1120px; left: calc(var(--bx) - var(--bw) / 2); width: var(--bw); opacity: var(--bo); pointer-events: none; mix-blend-mode: screen; }
+#beam .cone { position: absolute; inset: 0; }
+#beam .c1 {
+  clip-path: polygon(45% 0, 55% 0, 100% 100%, 0 100%);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--lc) 62%, transparent) 0%, color-mix(in srgb, var(--lc) 20%, transparent) 55%, color-mix(in srgb, var(--lc) 4%, transparent) 100%);
+  filter: blur(8px);
+}
+#beam .c2 {
+  clip-path: polygon(48% 0, 52% 0, 78% 100%, 22% 100%);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--lc) 80%, #fff) 0%, color-mix(in srgb, var(--lc) 26%, transparent) 60%, transparent 100%);
+  opacity: .55; filter: blur(14px);
+}
+#pool {
+  position: absolute; left: calc(var(--bx) - var(--bw) * .42); width: calc(var(--bw) * .84); top: 930px; height: 170px;
+  opacity: var(--po); pointer-events: none; mix-blend-mode: screen;
+  background: radial-gradient(ellipse 50% 50% at 50% 50%, color-mix(in srgb, var(--lc) 42%, transparent), transparent 72%);
+  filter: blur(6px);
+}
+#dust { position: absolute; inset: 0; pointer-events: none; transition: opacity 1.4s ease; }
+
+#slides { position: absolute; inset: 0; }
+
+#grain {
+  position: absolute; inset: -200px; pointer-events: none; opacity: .075; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+  animation: grain 0.9s steps(6) infinite;
+}
+#vignette { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 55%, rgba(0,0,0,.55) 100%); }
+#fade { position: absolute; inset: 0; background: #000; opacity: 0; pointer-events: none; transition: opacity 3.2s ease; z-index: 50; }
+#fade.on { opacity: 1; }
+
+/* ---------- HUD ---------- */
+#hud { position: absolute; inset: 0; pointer-events: none; z-index: 20; transition: opacity .6s; }
+#hud.hide { opacity: 0; }
+#chapter { position: absolute; left: 120px; bottom: 44px; font-size: 18px; letter-spacing: .3em; color: var(--muted); text-transform: uppercase; }
+#counter { position: absolute; right: 120px; bottom: 44px; font-size: 18px; letter-spacing: .3em; color: var(--muted); font-variant-numeric: tabular-nums; }
+#progress { position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: rgba(255,255,255,.06); }
+#progress i { display: block; height: 100%; width: 0; background: var(--gold); transition: width .9s cubic-bezier(.5,0,.2,1); }
+
+#nav { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 100; transition: opacity .4s; }
+#nav.hide { opacity: 0; pointer-events: none; }
+#nav button {
+  font: 500 14px var(--font); letter-spacing: .08em; color: var(--white); background: rgba(20,22,26,.8);
+  border: 1px solid rgba(255,255,255,.18); padding: 8px 16px; cursor: pointer; border-radius: 2px;
+}
+#nav button:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ---------- Slide cơ bản ---------- */
+.slide { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity 1s ease, visibility 0s linear 1s; z-index: 1; }
+.slide.active { opacity: 1; visibility: visible; transition: opacity 1s ease, visibility 0s; z-index: 2; }
+
+.eyebrow { position: absolute; left: 120px; top: 88px; font-size: 20px; font-weight: 500; letter-spacing: .38em; color: var(--gold); text-transform: uppercase; }
+.eyebrow.center { left: 0; right: 0; text-align: center; }
+.gold { color: var(--gold); }
+.muted { color: var(--muted); }
+
+.q { font-weight: 700; line-height: 1.16; letter-spacing: -.01em; }
+.big { font-size: 190px; font-weight: 800; letter-spacing: -.02em; line-height: 1; }
+
+.split .ch { display: inline-block; white-space: pre; }
+.split .qm { color: var(--gold); font-size: 1.18em; font-weight: 300; text-shadow: 0 0 60px rgba(217,185,120,.55); }
+
+/* ---------- Bóng người ---------- */
+.person { position: absolute; overflow: visible; }
+.person svg { width: 100%; height: 100%; overflow: visible; display: block; filter: drop-shadow(0 0 22px rgba(160,180,210,.14)); }
+.person .neck { fill: #07080a; }
+.person .body, .person .arm { fill: #07080a; stroke: rgba(255,255,255,.10); stroke-width: 1.3; }
+.person .headc { fill: #07080a; stroke: rgba(255,255,255,.14); stroke-width: 1.3; }
+.person .head { transform-origin: 100px 112px; transition: transform 2.2s cubic-bezier(.4,0,.2,1); }
+.person.bowed .head { transform: translateY(26px) rotate(12deg) scale(.96); }
+.person .torso { transform-origin: 100px 300px; transition: transform 2.2s cubic-bezier(.4,0,.2,1); }
+.person.bowed .torso { transform: translateY(8px) scaleY(.985); }
+.person .armR { transform-origin: 138px 150px; transition: transform 1.4s ease; }
+.person.point .armR { transform: rotate(-78deg); }
+.person-wrap { position: absolute; }
+
+/* ---------- Ảnh tùy chọn (nếu có file trong assets/images) ---------- */
+.photo { position: absolute; inset: 0; opacity: 0; background-size: cover; background-position: center; filter: grayscale(1) contrast(1.1) brightness(.55); transition: opacity 1.6s ease; pointer-events: none; }
+.photo.has { opacity: .42; }
+.credit { position: absolute; left: 120px; bottom: 76px; font-size: 15px; color: rgba(241,241,241,.4); letter-spacing: .06em; opacity: 0; transition: opacity 1s; }
+.credit.has { opacity: 1; }
+
+/* ---------- Slide 1 ---------- */
+.s1 .stack { position: absolute; left: 930px; top: 330px; width: 980px; }
+.s1 .big { font-size: 168px; white-space: nowrap; }
+.s1 .kicker { font-size: 22px; letter-spacing: .55em; color: var(--muted); margin-bottom: 34px; padding-left: 8px; }
+.s1 .subline { font-size: 30px; color: var(--muted); letter-spacing: .04em; margin-top: 34px; padding-left: 10px; }
+
+/* ---------- Slide 2 ---------- */
+.s2 .q { position: absolute; left: 120px; top: 250px; font-size: 92px; width: 1500px; }
+.s2 #audience { position: absolute; left: 0; bottom: 0; width: 1920px; height: 400px; }
+.hand { transform-origin: 55px 112px; animation: hesitate 3.6s ease-in-out infinite; }
+.audience-head { fill: #090a0d; stroke: rgba(255,255,255,.22); stroke-width: 1.6; }
+.s2 #audience { filter: drop-shadow(0 0 3px rgba(255,255,255,.28)); }
+
+/* ---------- Slide 3 ---------- */
+.s3 .half { position: absolute; top: 0; bottom: 0; width: 960px; padding: 190px 110px 0; }
+.s3 .left { left: 0; }
+.s3 .right { left: 960px; color: #07080a; background: linear-gradient(180deg, #f6f4ee 0%, #e4e1d8 70%, #cfccc2 100%); box-shadow: -60px 0 160px rgba(241,241,241,.25); }
+.s3 .term { font-size: 112px; font-weight: 800; letter-spacing: -.02em; line-height: 1; margin-bottom: 40px; }
+.s3 .def { font-size: 44px; line-height: 1.4; font-weight: 400; max-width: 700px; }
+.s3 .tag { position: absolute; top: 88px; font-size: 20px; letter-spacing: .38em; text-transform: uppercase; }
+.s3 .left .tag { left: 120px; color: var(--gold); }
+.s3 .right .tag { left: 110px; color: #7a6334; }
+.s3 .note { margin-top: 56px; font-size: 24px; letter-spacing: .1em; text-transform: uppercase; opacity: .55; }
+
+/* ---------- Slide 4 ---------- */
+.s4 .track { position: absolute; top: 0; left: 0; width: 5760px; height: 1080px; transform: translateX(calc(var(--pan, 0) * -1920px)); transition: transform 1.8s cubic-bezier(.6, 0, .2, 1); }
+.s4 .panel { position: absolute; top: 0; width: 1920px; height: 1080px; }
+.s4 .p1 { left: 0; } .s4 .p2 { left: 1920px; } .s4 .p3 { left: 3840px; }
+.s4 .label { position: absolute; left: 120px; top: 690px; font-size: 118px; font-weight: 800; letter-spacing: -.02em; line-height: 1; }
+.s4 .desc { position: absolute; left: 124px; top: 850px; font-size: 44px; color: var(--muted); max-width: 800px; line-height: 1.4; }
+.s4 .art { position: absolute; right: 150px; top: 170px; width: 760px; height: 480px; }
+.s4 .prompt { position: absolute; right: 120px; top: 92px; font-size: 20px; letter-spacing: .3em; color: var(--muted); text-transform: uppercase; }
+
+/* ---------- Slide 5 ---------- */
+.s5 .title { position: absolute; left: 120px; top: 150px; font-size: 54px; font-weight: 700; max-width: 1500px; }
+.s5 .frame { position: absolute; top: 250px; width: 520px; height: 560px; overflow: hidden; background: linear-gradient(180deg, #1a1d23, #0c0d11); border: 1px solid rgba(255,255,255,.09); }
+.s5 .f1 { left: 120px; } .s5 .f2 { left: 700px; } .s5 .f3 { left: 1280px; }
+.s5 .frame::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(217,185,120,.28), transparent 70%); opacity: 0; transition: opacity 1.4s; }
+.s5 .frame.lit::after { opacity: 1; }
+.s5 .frame svg, .s5 .frame .person { position: absolute; }
+.s5 .cap { position: absolute; top: 835px; width: 520px; }
+.s5 .c1 { left: 120px; } .s5 .c2 { left: 700px; } .s5 .c3 { left: 1280px; }
+.s5 .cap b { display: block; font-size: 22px; letter-spacing: .3em; color: var(--gold); text-transform: uppercase; margin-bottom: 14px; font-weight: 500; }
+.s5 .cap span { font-size: 32px; line-height: 1.35; color: var(--white); }
+
+/* ---------- Slide 6 ---------- */
+.s6 .q { position: absolute; left: 60px; right: 60px; top: 190px; font-size: 76px; text-align: center; white-space: nowrap; }
+.s6 .after { position: absolute; left: 0; right: 0; top: 540px; text-align: center; font-size: 40px; color: var(--muted); }
+
+/* ---------- Slide 7 ---------- */
+.s7 .zone { position: absolute; top: 240px; width: 720px; }
+.s7 .zl { left: 120px; } .s7 .zr { left: 1080px; }
+.s7 .zone h3 { font-size: 24px; letter-spacing: .34em; font-weight: 500; text-transform: uppercase; margin-bottom: 56px; }
+.s7 .zl h3 { color: var(--cold); } .s7 .zr h3 { color: var(--gold); }
+.s7 .item { font-size: 58px; font-weight: 700; line-height: 1.2; padding: 30px 0; border-top: 1px solid rgba(255,255,255,.16); }
+.s7 .item small { display: block; font-size: 22px; letter-spacing: .3em; color: var(--muted); font-weight: 400; margin-bottom: 8px; }
+.s7 .divider { position: absolute; left: 959px; top: 200px; width: 2px; height: 720px; background: linear-gradient(180deg, transparent, rgba(217,185,120,.7), transparent); }
+.s7 .title { position: absolute; left: 120px; top: 138px; font-size: 20px; }
+
+/* ---------- Slide 8 ---------- */
+.s8 .col { position: absolute; top: 200px; width: 760px; height: 560px; }
+.s8 .cl { left: 120px; } .s8 .cr { left: 1040px; }
+.s8 .num { font-size: 210px; font-weight: 800; line-height: .9; letter-spacing: -.04em; color: rgba(241,241,241,.9); }
+.s8 .cl .num { color: var(--gold); }
+.s8 .col h4 { font-size: 46px; font-weight: 700; line-height: 1.2; margin: 26px 0 22px; }
+.s8 .col p { font-size: 34px; line-height: 1.4; color: var(--muted); }
+.s8 .quote { position: absolute; left: 120px; right: 120px; top: 830px; font-size: 52px; font-weight: 700; text-align: center; border-top: 1px solid rgba(217,185,120,.5); padding-top: 38px; }
+
+/* ---------- Slide 9 ---------- */
+.s9 .q { position: absolute; left: 120px; top: 150px; font-size: 84px; }
+.s9 .line { position: absolute; left: 160px; top: 580px; width: 1600px; height: 2px; background: linear-gradient(90deg, rgba(255,255,255,.1), rgba(255,255,255,.4), rgba(217,185,120,.9)); }
+.s9 .node { position: absolute; top: 580px; width: 380px; margin-left: -190px; text-align: center; }
+.s9 .dot { position: absolute; left: 50%; top: -22px; width: 44px; height: 44px; margin-left: -22px; border-radius: 50%; border: 2px solid rgba(255,255,255,.7); background: var(--black); }
+.s9 .dot::before, .s9 .dot::after { content: ''; position: absolute; left: 50%; top: 50%; width: 22px; height: 2px; background: rgba(255,255,255,.8); }
+.s9 .dot::before { transform: translate(-50%, -50%) rotate(45deg); }
+.s9 .dot::after { transform: translate(-50%, -50%) rotate(-45deg); }
+.s9 .node.ok .dot { background: var(--gold); border-color: var(--gold); box-shadow: 0 0 60px 8px rgba(217,185,120,.6); }
+.s9 .node.ok .dot::before, .s9 .node.ok .dot::after { display: none; }
+.s9 .date { position: absolute; left: 0; right: 0; top: -150px; font-size: 62px; font-weight: 800; letter-spacing: -.01em; }
+.s9 .node.ok .date { color: var(--gold); }
+.s9 .what { position: absolute; left: 0; right: 0; top: 56px; font-size: 32px; line-height: 1.35; color: var(--white); }
+.s9 .what em { display: block; font-style: normal; font-size: 22px; letter-spacing: .28em; color: var(--muted); margin-top: 12px; text-transform: uppercase; }
+.s9 .foot { position: absolute; left: 120px; right: 120px; top: 880px; font-size: 32px; color: var(--muted); line-height: 1.45; }
+
+/* ---------- Slide 10 ---------- */
+.s10 .words { position: absolute; left: 120px; top: 170px; }
+.s10 .w { font-size: 190px; font-weight: 800; letter-spacing: -.03em; line-height: 1.02; }
+.s10 .w:nth-child(3) { color: var(--gold); }
+.s10 .quote { position: absolute; left: 120px; width: 1180px; top: 835px; font-size: 38px; line-height: 1.45; color: var(--white); }
+.s10 .photo { filter: grayscale(.2) brightness(.8); }
+.s10 .photo.has { opacity: .9; }
+.s10 .shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(5,6,8,.92) 0%, rgba(5,6,8,.65) 45%, rgba(5,6,8,0) 80%); }
+.s10 .streak { position: absolute; left: 1500px; bottom: -40px; width: 6px; height: 760px; background: linear-gradient(0deg, rgba(255,255,255,0), rgba(255,255,255,.95)); filter: blur(2px); box-shadow: 0 0 90px 30px rgba(217,185,120,.35); transform-origin: bottom; }
+.s10.photo-on .streak { display: none; }
+
+/* ---------- Slide 11 ---------- */
+.s11 .q { position: absolute; left: 200px; right: 200px; top: 330px; text-align: center; font-size: 118px; }
+.s11 .hint { position: absolute; left: 0; right: 0; top: 760px; text-align: center; font-size: 30px; color: var(--muted); letter-spacing: .1em; }
+
+/* ---------- Slide 12 ---------- */
+.s12 .recap { position: absolute; left: 120px; top: 250px; width: 560px; }
+.s12 .recap h3 { font-size: 22px; letter-spacing: .34em; color: var(--cold); font-weight: 500; margin-bottom: 34px; text-transform: uppercase; }
+.s12 .recap p { font-size: 34px; line-height: 1.35; padding: 22px 0; border-top: 1px solid rgba(255,255,255,.14); }
+.s12 .act { position: absolute; width: 480px; height: 300px; padding: 0 0 0 28px; border-left: 2px solid rgba(217,185,120,.7); }
+.s12 .a1 { left: 780px; top: 210px; } .s12 .a2 { left: 1320px; top: 210px; }
+.s12 .a3 { left: 780px; top: 590px; } .s12 .a4 { left: 1320px; top: 590px; }
+.s12 .act b { display: block; font-size: 84px; font-weight: 800; color: var(--gold); line-height: 1; margin-bottom: 14px; }
+.s12 .act span { font-size: 36px; line-height: 1.35; font-weight: 500; }
+
+/* ---------- Slide 13 ---------- */
+.s13 .stack { position: absolute; left: 920px; top: 330px; width: 960px; }
+.s13 .q { font-size: 78px; }
+
+/* ---------- Slide 14 ---------- */
+.s14 .q { position: absolute; left: 0; right: 0; top: 330px; text-align: center; font-size: 104px; font-weight: 800; }
+.s14 .sub { position: absolute; left: 0; right: 0; top: 590px; text-align: center; font-size: 42px; color: var(--muted); }
+.s14 .team { position: absolute; left: 0; right: 0; top: 760px; text-align: center; font-size: 28px; letter-spacing: .3em; color: var(--gold); text-transform: uppercase; }

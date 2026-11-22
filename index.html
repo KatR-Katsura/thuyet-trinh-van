@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Light in Failure — Nhóm 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+<div id="viewport">
+<div id="stage">
+  <div id="bg"></div>
+  <div id="beam"><div class="cone c1"></div><div class="cone c2"></div></div>
+  <div id="pool"></div>
+  <canvas id="dust" width="1920" height="1080"></canvas>
+
+  <div id="slides">
+
+    <!-- ============ CHƯƠNG I — THE JUDGMENT ============ -->
+
+    <section class="slide s1" data-chapter="I · The Judgment" data-title="Thất bại?">
+      <div class="person-wrap" style="left:522px; bottom:60px; width:236px; height:640px;">
+        <div class="person bowed" data-person style="inset:0"></div>
+      </div>
+      <div class="stack">
+        <div class="kicker rise" style="--d:3.2s">MỘT CÂU HỎI CHO CẢ LỚP</div>
+        <h1 class="big split" data-d="3.7">THẤT BẠI<span class="qm">?</span></h1>
+        <div class="subline rise" style="--d:5.6s">Nó thật sự có nghĩa là gì?</div>
+      </div>
+    </section>
+
+    <section class="slide s2" data-chapter="I · The Judgment" data-title="Have you ever?">
+      <div class="photo" data-img="assets/images/classroom.jpg" data-credit="Ảnh: Unsplash"></div>
+      <div class="eyebrow fade" style="--d:.6s">02 · Have you ever?</div>
+      <h2 class="q">
+        <span class="rise" style="--d:1.0s; display:block">Bạn đã bao giờ biết đáp án</span>
+        <span class="rise" style="--d:1.9s; display:block">nhưng không dám giơ tay</span>
+        <span class="rise gold" style="--d:2.8s; display:block">vì sợ nói sai?</span>
+      </h2>
+      <svg id="audience" class="fade" style="--d:1.4s" viewBox="0 0 1920 400" data-gen="audience"></svg>
+      <div class="credit"></div>
+    </section>
+
+    <section class="slide s3" data-chapter="I · The Judgment" data-title="Failure ≠ Shame">
+      <div class="half left">
+        <div class="tag">03 · Failure ≠ Shame</div>
+        <div class="term wipe" style="--d:.6s">THẤT BẠI</div>
+        <div class="def rise" style="--d:1.4s">Không đạt được điều mình mong muốn.</div>
+        <div class="note fade" style="--d:2.4s">Một sự việc</div>
+      </div>
+      <div class="half right">
+        <div class="tag">&nbsp;</div>
+        <div class="term wipe" style="--d:1.6s">XẤU HỔ</div>
+        <div class="def rise" style="--d:2.4s">Cảm thấy bản thân kém cỏi và sợ người khác đánh giá.</div>
+        <div class="note fade" style="--d:3.4s">Một cảm giác</div>
+      </div>
+    </section>
+
+    <!-- ============ CHƯƠNG II — THE REALITY ============ -->
+
+    <section class="slide s4" data-chapter="II · The Reality" data-title="The Pressure">
+      <div class="eyebrow fade" style="--d:.6s">04 · The Pressure</div>
+      <div class="track">
+        <div class="panel p1">
+          <div class="prompt">Vì sao ta sợ thất bại? · 1/3</div>
+          <svg class="art" viewBox="0 0 760 700">
+            <g stroke="rgba(255,255,255,.16)" stroke-width="1.5">
+              <line x1="0" y1="140" x2="760" y2="140"/><line x1="0" y1="280" x2="760" y2="280"/>
+              <line x1="0" y1="420" x2="760" y2="420"/><line x1="0" y1="560" x2="760" y2="560"/>
+            </g>
+            <g fill="rgba(241,241,241,.82)">
+              <rect x="40"  y="150" width="90" height="410"/><rect x="170" y="90"  width="90" height="470"/>
+              <rect x="300" y="200" width="90" height="360"/><rect x="430" y="60"  width="90" height="500"/>
+            </g>
+            <rect x="570" y="470" width="90" height="90" fill="#D9B978"/>
+            <line x1="0" y1="560" x2="760" y2="560" stroke="rgba(255,255,255,.5)" stroke-width="2"/>
+          </svg>
+          <div class="label">ĐIỂM SỐ</div>
+          <div class="desc">Điểm thấp là thấy mình thua.</div>
+        </div>
+        <div class="panel p2">
+          <div class="prompt">Vì sao ta sợ thất bại? · 2/3</div>
+          <div class="art"><div class="person" data-person style="left:170px; top:10px; width:180px; height:486px;"></div><div class="person" data-person style="left:420px; top:60px; width:165px; height:445px; opacity:.55"></div></div>
+          <div class="label">SO SÁNH</div>
+          <div class="desc">Điểm số lúc nào cũng được đem ra đặt cạnh nhau.</div>
+        </div>
+        <div class="panel p3">
+          <div class="prompt">Vì sao ta sợ thất bại? · 3/3</div>
+          <svg class="art" viewBox="0 0 760 700">
+            <path d="M20 350 Q380 60 740 350 Q380 640 20 350Z" fill="none" stroke="rgba(241,241,241,.8)" stroke-width="3"/>
+            <circle cx="380" cy="350" r="118" fill="none" stroke="rgba(217,185,120,.85)" stroke-width="3"/>
+            <g class="pupil"><circle cx="380" cy="350" r="54" fill="#D9B978"/><circle cx="380" cy="350" r="26" fill="#050608"/></g>
+          </svg>
+          <div class="label">ÁNH MẮT NGƯỜI KHÁC</div>
+          <div class="desc">Sai trước cả lớp thì sợ bị cười.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide s5" data-chapter="II · The Reality" data-title="Three perspectives">
+      <div class="eyebrow fade" style="--d:.6s">05 · Three perspectives</div>
+      <h2 class="title q rise" style="--d:1s">Một bạn lên bảng làm sai. Ba chỗ đứng, ba cách nhìn.</h2>
+
+      <div class="frame f1 fade" data-lit="0" style="--d:1.4s">
+        <svg viewBox="0 0 520 560" width="520" height="560" style="left:0;top:0">
+          <rect x="190" y="90" width="300" height="190" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+          <path d="M215 150 q30 -26 60 0 t60 0 t60 0 M215 205 q40 -22 80 0 t80 0" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="3"/>
+        </svg>
+        <div class="person bowed" data-person style="left:60px; top:130px; width:170px; height:460px;"></div>
+      </div>
+      <div class="frame f2 fade" data-lit="1" style="--d:1.6s">
+        <svg viewBox="0 0 520 560" width="520" height="560" style="left:0;top:0" data-gen="audience-small"></svg>
+      </div>
+      <div class="frame f3 fade" data-lit="2" style="--d:1.8s">
+        <svg viewBox="0 0 520 560" width="520" height="560" style="left:0;top:0">
+          <rect x="230" y="90" width="260" height="180" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+          <path d="M252 150 q30 -26 60 0 t60 0 M252 205 q40 -22 80 0 t80 0" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="3"/>
+        </svg>
+        <div class="person point" data-person style="left:40px; top:110px; width:170px; height:460px;"></div>
+      </div>
+
+      <div class="cap c1 rise" style="--d:2.2s"><b>Người lên bảng</b><span>Xấu hổ, chỉ muốn ngồi xuống.</span></div>
+      <div class="cap c2 rise" style="--d:2.4s"><b>Người ngồi dưới</b><span>Có thể cười vì ngại hoặc quen miệng, chưa chắc là ác ý.</span></div>
+      <div class="cap c3 rise" style="--d:2.6s"><b>Cô giáo</b><span>Thấy chỗ cả lớp chưa hiểu để giảng lại.</span></div>
+    </section>
+
+    <section class="slide s6" data-chapter="II · The Reality" data-title="Who remembers?">
+      <div class="photo" data-img="assets/images/lonely.jpg" data-credit="Ảnh: Unsplash"></div>
+      <div class="eyebrow center fade" style="--d:.6s">06 · Who remembers?</div>
+      <h2 class="q"><span class="rise" style="--d:1s; display:block">Người khác có thực sự nhớ lỗi sai của bạn</span><span class="rise gold" style="--d:2s; display:block">lâu như bạn nghĩ?</span></h2>
+      <div class="person-wrap fade" style="--d:2.4s; left:864px; bottom:44px; width:192px; height:520px;"><div class="person" data-person style="inset:0"></div></div>
+      <div class="after" data-step="1" style="top:395px">Thường thì người khác để ý lỗi của mình ít hơn mình tưởng.</div>
+      <div class="credit"></div>
+    </section>
+
+    <section class="slide s7" data-chapter="II · The Reality" data-title="The price of fear">
+      <div class="eyebrow fade" style="--d:.6s">07 · The price of fear</div>
+      <div class="divider fade" style="--d:1s"></div>
+      <div class="zone zl">
+        <h3 class="fade" style="--d:1.0s">Đối với bản thân</h3>
+        <div class="item rise" style="--d:1.4s"><small>01</small>Không dám thử.</div>
+        <div class="item rise" style="--d:1.9s"><small>02</small>Không dám nhận sai.</div>
+        <div class="item rise" style="--d:2.4s"><small>03</small>Không biết sai ở đâu để sửa.</div>
+      </div>
+      <div class="zone zr" data-step="1">
+        <h3>Đối với tập thể</h3>
+        <div class="item"><small>01</small>Lớp học im lặng.</div>
+        <div class="item"><small>02</small>Không ai dám thử cách mới.</div>
+        <div class="item"><small>03</small>Mọi người ngại phát biểu.</div>
+      </div>
+    </section>
+
+    <!-- ============ CHƯƠNG III — THE TURNING POINT ============ -->
+
+    <section class="slide s8" data-chapter="III · The Turning Point" data-title="Two kinds of failure">
+      <div class="eyebrow fade" style="--d:.6s">08 · Two kinds of failure</div>
+      <div class="col cl rise" data-lit="0" style="--d:1s">
+        <div class="num">01</div>
+        <h4>Đã cố gắng nhưng chưa đạt kết quả.</h4>
+        <p>Không đáng xấu hổ. Cần nhìn nhận và sửa chữa.</p>
+      </div>
+      <div class="col cr rise" data-lit="1" style="--d:1.4s">
+        <div class="num">02</div>
+        <h4>Thiếu trách nhiệm, chép bài, sai nhưng không chịu nhận.</h4>
+        <p>Cần nghiêm túc nhìn nhận hành động của mình.</p>
+      </div>
+      <div class="quote" data-step="2">Cái đáng xấu hổ là <span class="gold">cách mình làm</span>, không phải kết quả thấp.</div>
+    </section>
+
+    <section class="slide s9" data-chapter="III · The Turning Point" data-title="Three failures, one breakthrough">
+      <div class="eyebrow fade" style="--d:.6s">09 · Three failures, one breakthrough</div>
+      <h2 class="q"><span class="rise" style="--d:1s">Ba lần hỏng. <span class="gold">Một lần bay lên.</span></span></h2>
+      <div class="line wipe" style="--d:1.2s"></div>
+      <div class="node" data-lit="0" style="left:300px"><div class="dot"></div><div class="date">3/2006</div><div class="what">Lần phóng thứ nhất<em>Thất bại</em></div></div>
+      <div class="node" data-lit="1" style="left:700px"><div class="dot"></div><div class="date">3/2007</div><div class="what">Lần phóng thứ hai<em>Thất bại</em></div></div>
+      <div class="node" data-lit="2" style="left:1100px"><div class="dot"></div><div class="date">8/2008</div><div class="what">Lần phóng thứ ba<em>Thất bại</em></div></div>
+      <div class="node ok" data-lit="3" style="left:1560px"><div class="dot"></div><div class="date">28/09/2008</div><div class="what">Lần phóng thứ tư<em>Thành công</em></div></div>
+      <div class="foot fade" style="--d:2.2s">Falcon 1 của SpaceX. Mỗi lần hỏng vì một lý do khác nhau, và mỗi lần họ tìm ra lỗi, sửa rồi mới đi tiếp.</div>
+    </section>
+
+    <section class="slide s10" data-chapter="III · The Turning Point" data-title="Learn. Fix. Repeat.">
+      <div class="photo" data-img="assets/images/falcon1_flight4.jpg" data-credit="Ảnh: Falcon 1 Flight 4, Wikimedia Commons"></div>
+      <div class="shade"></div>
+      <div class="streak"></div>
+      <div class="eyebrow fade" style="--d:.6s">10 · Learn. Fix. Repeat.</div>
+      <div class="words">
+        <div class="w split" data-d="1.2">LEARN.</div>
+        <div class="w split" data-d="2.4">FIX.</div>
+        <div class="w split" data-d="3.6">REPEAT.</div>
+      </div>
+      <div class="quote rise" style="--d:5s">Không phải cứ thất bại là sẽ thành công. Điều quan trọng là <span class="gold">biết nhìn lại, tìm ra lỗi và sửa chữa.</span></div>
+      <div class="credit"></div>
+    </section>
+
+    <!-- ============ CHƯƠNG IV — THE LIGHT ============ -->
+
+    <section class="slide s11" data-chapter="IV · The Light" data-title="Your voice matters">
+      <div class="eyebrow center fade" style="--d:.6s">11 · Your voice matters</div>
+      <h2 class="q fade" style="--d:1.2s">Khi nào thì sai thật sự <span class="gold">đáng xấu hổ?</span></h2>
+      <div class="hint fade" style="--d:3s">Mời một hai bạn.</div>
+    </section>
+
+    <section class="slide s12" data-chapter="IV · The Light" data-title="Four actions">
+      <div class="eyebrow fade" style="--d:.6s">12 · Four actions</div>
+      <div class="recap">
+        <h3 class="fade" style="--d:1s">Nhóm gom lại</h3>
+        <p class="rise" style="--d:1.3s">Sai có thể gây chuyện, nên phải nghiêm túc.</p>
+        <p class="rise" style="--d:1.7s">Sai một lần không có nghĩa là mình kém.</p>
+        <p class="rise" style="--d:2.1s">Quan trọng là nhận sai, tìm ra chỗ sai, rồi làm lại.</p>
+      </div>
+      <div class="act a1" data-lit="1"><b>01</b><span>Đừng đánh giá cả bản thân chỉ vì một lần sai.</span></div>
+      <div class="act a2" data-lit="2"><b>02</b><span>Sai thì nhận, không đổ lỗi.</span></div>
+      <div class="act a3" data-lit="3"><b>03</b><span>Ghi lại lỗi để lần sau sửa.</span></div>
+      <div class="act a4" data-lit="4"><b>04</b><span>Người khác sai thì đừng cười, hãy nói: “Thử lại đi.”</span></div>
+    </section>
+
+    <section class="slide s13" data-chapter="IV · The Light" data-title="The final question">
+      <div class="eyebrow fade" style="--d:.6s">13 · The final question</div>
+      <div class="person-wrap" style="left:522px; bottom:60px; width:236px; height:640px;">
+        <div class="person bowed" data-person style="inset:0"></div>
+      </div>
+      <div class="stack">
+        <h2 class="q"><span class="rise" style="--d:3.4s; display:block">Nếu sợ sai đến mức không dám thử,</span><span class="rise gold" style="--d:4.4s; display:block">mình đang bỏ lỡ điều gì?</span></h2>
+      </div>
+    </section>
+
+    <section class="slide s14" data-chapter="IV · The Light" data-title="The end" data-fade="1">
+      <h1 class="q"><span class="rise" style="--d:1s; display:block">THẤT BẠI KHÔNG</span><span class="rise gold" style="--d:1.8s; display:block">ĐÁNG XẤU HỔ.</span></h1>
+      <div class="sub fade" style="--d:3.2s; top:640px">Điều đáng nể là dám nhìn lại, sửa chữa và thử tiếp.</div>
+      <div class="team fade" style="--d:4.4s; top:800px">Nhóm 2 · Xin cảm ơn cô và các bạn!</div>
+    </section>
+
+  </div>
+
+  <div id="vignette"></div>
+  <div id="grain"></div>
+  <div id="hud"><div id="chapter"></div><div id="counter"></div><div id="progress"><i></i></div></div>
+  <div id="fade"></div>
+</div>
+</div>
+
+<div id="nav">
+  <button id="btnPrev" title="Slide trước (←)">← TRƯỚC</button>
+  <button id="btnNext" title="Tiếp (→ hoặc Space)">TIẾP →</button>
+  <button id="btnFull" title="Toàn màn hình (F)">TOÀN MÀN HÌNH</button>
+  <button id="btnPres" title="Cửa sổ người trình bày (P)">NGƯỜI TRÌNH BÀY</button>
+</div>
+
+<script src="js/notes.js"></script>
+<script src="js/transitions.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

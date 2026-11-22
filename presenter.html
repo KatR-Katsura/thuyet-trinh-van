@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Người trình bày — The Light in Failure</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Be Vietnam Pro', 'Segoe UI', system-ui, Arial, sans-serif; background: #0c0d10; color: #eceae4; height: 100vh; display: grid; grid-template-rows: auto 1fr auto; }
+  header { display: flex; gap: 24px; align-items: center; padding: 14px 24px; border-bottom: 1px solid #25272d; flex-wrap: wrap; }
+  .num { font-size: 28px; font-weight: 800; color: #D9B978; font-variant-numeric: tabular-nums; }
+  .title { font-size: 20px; font-weight: 600; }
+  .who { padding: 4px 12px; border: 1px solid #D9B978; color: #D9B978; font-size: 14px; letter-spacing: .08em; }
+  .spacer { flex: 1; }
+  .timer { text-align: right; font-variant-numeric: tabular-nums; }
+  .timer b { font-size: 30px; display: block; }
+  .timer span { font-size: 13px; color: #8d9098; }
+  .over { color: #e0795c; }
+  main { padding: 22px 24px; overflow: auto; }
+  .say p { font-size: 26px; line-height: 1.55; margin-bottom: 18px; }
+  .ph { background: rgba(217,185,120,.22); color: #f3d79a; padding: 0 6px; border-radius: 3px; }
+  .cue { margin-top: 26px; padding-top: 18px; border-top: 1px dashed #343741; }
+  .cue h4 { font-size: 13px; letter-spacing: .25em; color: #8d9098; font-weight: 500; margin-bottom: 10px; }
+  .cue p { font-size: 18px; line-height: 1.5; color: #b9bcc4; margin-bottom: 8px; }
+  footer { display: flex; gap: 14px; align-items: center; padding: 12px 24px; border-top: 1px solid #25272d; flex-wrap: wrap; font-size: 15px; color: #9a9da6; }
+  footer .next b { color: #eceae4; font-weight: 600; }
+  button { font: 500 14px inherit; font-family: inherit; background: #1b1d22; color: #eceae4; border: 1px solid #343741; padding: 9px 16px; cursor: pointer; border-radius: 2px; }
+  button:hover { border-color: #D9B978; color: #D9B978; }
+  .bar { height: 4px; background: #1b1d22; }
+  .bar i { display: block; height: 100%; width: 0; background: #D9B978; transition: width .4s; }
+</style>
+</head>
+<body>
+<header>
+  <div class="num" id="num">--/--</div>
+  <div class="title" id="title">Đang chờ kết nối với cửa sổ trình chiếu…</div>
+  <div class="who" id="who"></div>
+  <div class="spacer"></div>
+  <div class="timer"><b id="slideTime">0:00</b><span id="slideBudget"></span></div>
+  <div class="timer"><b id="totalTime">0:00</b><span id="totalBudget"></span></div>
+</header>
+<div class="bar"><i id="bar"></i></div>
+<main>
+  <div class="say" id="say"></div>
+  <div class="cue" id="cue"></div>
+</main>
+<footer>
+  <button id="prev">← Trước</button>
+  <button id="next">Tiếp →</button>
+  <button id="reset" title="Đặt lại đồng hồ (R)">Đặt lại đồng hồ</button>
+  <span class="next" id="nextTitle"></span>
+  <span class="spacer"></span>
+  <span id="stepInfo"></span>
+</footer>
+<script src="js/notes.js"></script>
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const fmt = (s) => Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+  const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  const hl = (t) => esc(t).replace(/\[[^\]]*\]/g, (m) => '<span class="ph">' + m + '</span>');
+  const BUDGET = NOTES.reduce((a, n) => a + n.time, 0);
+  $('totalBudget').textContent = 'kế hoạch ' + fmt(BUDGET) + ' / giới hạn 10:00';
+
+  let started = 0, slideStart = 0, cur = -1;
+  function tick() {
+    if (!started) return;
+    const now = Date.now();
+    const total = (now - started) / 1000, sl = (now - slideStart) / 1000;
+    $('totalTime').textContent = fmt(total);
+    $('totalTime').className = total > 600 ? 'over' : '';
+    $('slideTime').textContent = fmt(sl);
+    const bud = cur >= 0 ? NOTES[cur].time : 0;
+    $('slideTime').className = sl > bud + 10 ? 'over' : '';
+    $('bar').style.width = Math.min(100, total / 600 * 100) + '%';
+  }
+  setInterval(tick, 500);
+
+  window.addEventListener('message', (e) => {
+    const d = e.data || {};
+    if (d.type !== 'state') return;
+    if (!started && d.cur >= 0) started = Date.now();
+    if (d.cur !== cur) { cur = d.cur; slideStart = Date.now(); render(d); }
+    $('stepInfo').textContent = d.maxStep ? 'Bước ' + d.step + ' / ' + d.maxStep + ' (bấm Tiếp để sang bước sau)' : '';
+    $('nextTitle').innerHTML = d.nextTitle ? 'Slide kế: <b>' + esc(d.nextTitle) + '</b>' : 'Đây là slide cuối.';
+  });
+
+  function render(d) {
+    const n = NOTES[d.cur] || { speaker: '', time: 0, say: [], cue: [] };
+    $('num').textContent = String(d.cur + 1).padStart(2, '0') + ' / ' + String(d.total).padStart(2, '0');
+    $('title').textContent = d.title;
+    $('who').textContent = n.speaker;
+    $('slideBudget').textContent = 'dự kiến ' + fmt(n.time);
+    $('say').innerHTML = n.say.map((p) => '<p>' + hl(p) + '</p>').join('');
+    $('cue').innerHTML = n.cue.length ? '<h4>GỢI Ý THAO TÁC</h4>' + n.cue.map((p) => '<p>' + hl(p) + '</p>').join('') : '';
+  }
+
+  const send = (t) => { if (window.opener) window.opener.postMessage({ type: t }, '*'); };
+  $('next').onclick = () => send('next');
+  $('prev').onclick = () => send('prev');
+  $('reset').onclick = () => { started = Date.now(); slideStart = Date.now(); };
+  window.addEventListener('keydown', (e) => {
+    if (['ArrowRight', ' ', 'PageDown'].includes(e.key)) { e.preventDefault(); send('next'); }
+    if (['ArrowLeft', 'PageUp'].includes(e.key)) { e.preventDefault(); send('prev'); }
+    if (e.key === 'r' || e.key === 'R') { started = Date.now(); slideStart = Date.now(); }
+  });
+  if (window.opener) window.opener.postMessage({ type: 'hello' }, '*');
+})();
+</script>
+</body>
+</html>
